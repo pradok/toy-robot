@@ -1,4 +1,4 @@
-const config = {}
+const config = {};
 
 config.tableSurface = {
   start: {
@@ -9,11 +9,11 @@ config.tableSurface = {
     X: 5,
     Y: 5
   }
-}
+};
 config.robot = {
   commands: ['PLACE', 'MOVE', 'LEFT', 'RIGHT', 'REPORT'],
   initialCommands: ['PLACE'],
   directions: ['NORTH', 'EAST', 'SOUTH', 'WEST']
-}
+};
 
-module.exports = config
+module.exports = config;
