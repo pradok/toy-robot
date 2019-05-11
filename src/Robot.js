@@ -31,6 +31,7 @@ class Robot {
     } catch (error) {
       return error;
     }
+
     const { placeX, placeY, faceDirection } = placeInputs;
     if (this.surfaceBoundary.isOutOfBounds(placeX, placeY)) {
       const { x, y } = this.surfaceBoundary.dimension;
@@ -42,23 +43,28 @@ class Robot {
     this._updatePosition(placeX, placeY, faceDirection);
   }
 
-  get getCurrentPosition () {
-    return this.currentPosition;
+  get getCurrentPosition() {
+    const {x, y, face} = this.currentPosition;
+    return {
+      x,
+      y,
+      face: this.config.directions[face]
+    };
   }
 
-  get report () {
-    const {x, y, face} = this.currentPosition;
+  get report() {
+    const { x, y, face } = this.getCurrentPosition;
     if (x === undefined && y === undefined && face === undefined) {
       return 'Place the robot before Report';
     }
-    return `Robot's current position: ${x}, ${y}, ${face}`;
+    return `${x},${y},${face}`;
   }
 
   /**
    *
    * @param x {number|string} x coordinate
    * @param y {number|string} y coordinate
-   * @param f {String} Face direction, can be upper or lower case ('NORTH','EAST', 'SOUTH', 'WEST')
+   * @param face {String} Face direction, can be upper or lower case ('NORTH', 'SOUTH', 'EAST', 'WEST')
    * @returns {{faceDirection: string, placeY: number, placeX: number}}
    * @private
    */
@@ -69,7 +75,6 @@ class Robot {
     if (typeof face !== 'string') {
       throw new TypeError('Face direction should be a string');
     }
-
     const faceDirection = face.toUpperCase();
     const placeX = parseInt(x);
     const placeY = parseInt(y);
@@ -82,10 +87,9 @@ class Robot {
       throw new TypeError('Negative coordinates not allowed');
     }
 
-    if (!this.config.directions.find(f)) {
+    if (!this.config.directions.find(direction => direction === faceDirection)) {
       throw new TypeError('Incorrect Face direction');
     }
-
     return {
       placeX,
       placeY,
@@ -103,7 +107,7 @@ class Robot {
   _updatePosition(x, y, face) {
     this.currentPosition.x = x;
     this.currentPosition.y = y;
-    this.currentPosition.f = this.config.directions.indexOf(face);
+    this.currentPosition.face = this.config.directions.indexOf(face);
   }
 
 }
