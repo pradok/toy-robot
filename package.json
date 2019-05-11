@@ -1,0 +1,19 @@
+{
+  "name": "xplor",
+  "version": "1.0.0",
+  "description": "Toy Robot Simulator",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint src --color",
+    "prettier": "prettier --write 'src/**/*.js'",
+    "prettier:write": "onchange 'src/**/*.js' -- prettier --write {{changed}}",
+    "test": "jest --watchAll",
+    "coverage": "jest --coverage"
+  },
+  "author": "Pradosh Sinha",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "prettier": "1.17.0"
+  }
+}
