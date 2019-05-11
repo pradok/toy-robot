@@ -32,19 +32,20 @@ class Robot {
       return error;
     }
 
-    const { placeX, placeY, faceDirection } = placeInputs;
+    let { placeX, placeY, faceDirection } = placeInputs;
+    // Place to 0, 0 if set to outside boundary
     if (this.surfaceBoundary.isOutOfBounds(placeX, placeY)) {
-      const { x, y } = this.surfaceBoundary.dimension;
-      return new Error(`Robot is placed outside boundary, should within x:${x} y:${y}`);
+      placeX = 0;
+      placeY = 0;
     }
+    this._updatePosition(placeX, placeY, faceDirection);
     if (!this.placeInitiated) {
       this.placeInitiated = true;
     }
-    this._updatePosition(placeX, placeY, faceDirection);
   }
 
   get getCurrentPosition() {
-    const {x, y, face} = this.currentPosition;
+    const { x, y, face } = this.currentPosition;
     return {
       x,
       y,
@@ -58,6 +59,36 @@ class Robot {
       return 'Place the robot before Report';
     }
     return `${x},${y},${face}`;
+  }
+
+  move() {
+    // Ignore move
+    if (!this.placeInitiated) {
+      return;
+    }
+    let { x, y, face } = this.currentPosition;
+
+    // Increment x and y based on face direction
+    switch (face) {
+      case 0: // North
+        y++;
+        break;
+      case 1: // East
+        x++;
+        break;
+      case 2: // South
+        y--;
+        break;
+      case 3: // West
+        x--;
+        break;
+    }
+
+    // Ignore if falling outside boundary
+    if (this.surfaceBoundary.isOutOfBounds(x, y)) {
+      return;
+    }
+    this._updatePosition(x, y, this.config.directions[face]);
   }
 
   /**
