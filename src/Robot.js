@@ -55,20 +55,47 @@ class Robot {
 
   get report() {
     const { x, y, face } = this.getCurrentPosition;
+    // Ignore if not placed on surface
     if (x === undefined && y === undefined && face === undefined) {
-      return 'Place the robot before Report';
+      return;
     }
     return `${x},${y},${face}`;
   }
 
+  /**
+   * Change direction to left based on the numerical representation of face direction.
+   */
+  left() {
+    // Ignore right if not placed on table
+    if (!this.placeInitiated) {
+      return;
+    }
+    this.currentPosition.face = (this.currentPosition.face - 1) < 0 ? 3 : this.currentPosition.face - 1;
+  }
+
+  /**
+   * Change direction to right based on the numerical representation of face direction.
+   */
+  right() {
+    // Ignore right if not placed on table
+    if (!this.placeInitiated) {
+      return;
+    }
+    this.currentPosition.face = (this.currentPosition.face + 1) > 3 ? 0 : this.currentPosition.face + 1;
+  }
+
+  /**
+   * Move the robot one step
+   * Ignore if moving out of bounds so it remains within surface boundary
+   */
   move() {
-    // Ignore move
+    // Ignore move if not placed on surface.
     if (!this.placeInitiated) {
       return;
     }
     let { x, y, face } = this.currentPosition;
 
-    // Increment x and y based on face direction
+    // Increment x and y based on numerical representation of the face direction
     switch (face) {
       case 0: // North
         y++;
