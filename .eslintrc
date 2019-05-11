@@ -13,5 +13,7 @@
         "ecmaVersion": 2018
     },
     "rules": {
+        "no-var": 2,
+        "prefer-const": 2
     }
 }
