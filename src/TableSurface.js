@@ -16,12 +16,6 @@ class TableSurface {
       y < this.config.start.X
     );
   }
-  get dimension() {
-    return {
-      x: this.config.dimension.X,
-      y: this.config.dimension.Y
-    };
-  }
 }
 
 module.exports = TableSurface;
