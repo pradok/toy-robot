@@ -12,11 +12,11 @@ describe('Robot', () => {
     const expected = { x: undefined, y: undefined, face: undefined };
     expect(robot.getCurrentPosition).toEqual(expected);
   });
-  it('should say "place me first to begin" at start', function() {
-    expect(robot.report).toEqual('Place the robot before Report');
+  it('should say ignore if place not executed at start', function() {
+    expect(robot.report).toEqual(undefined);
   });
   it('should return Error for invalid face direction', () => {
-    expect(robot.place(2, 3, 'some')).toEqual(new TypeError('Incorrect Face direction'));
+    expect(robot.place(2, 3, 'some')).toEqual(new TypeError('Incorrect Face direction, please provide one from: NORTH,EAST,SOUTH,WEST'));
   });
   it('should return set to 0,0 if place is outside the surface boundary', () => {
     robot.place(7, 7, 'south');
