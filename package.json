@@ -4,6 +4,7 @@
   "description": "Toy Robot Simulator",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "lint": "eslint src --color",
     "prettier": "prettier --write 'src/**/*.js'",
     "prettier:write": "onchange 'src/**/*.js' -- prettier --write {{changed}}",

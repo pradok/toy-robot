@@ -16,7 +16,11 @@ describe('Robot', () => {
     expect(robot.report).toEqual(undefined);
   });
   it('should return Error for invalid face direction', () => {
-    expect(robot.place(2, 3, 'some')).toEqual(new TypeError('Incorrect Face direction, please provide one from: NORTH,EAST,SOUTH,WEST'));
+    expect(robot.place(2, 3, 'some')).toEqual(
+      new TypeError(
+        'Incorrect Face direction, please provide one from: NORTH,EAST,SOUTH,WEST'
+      )
+    );
   });
   it('should return set to 0,0 if place is outside the surface boundary', () => {
     robot.place(7, 7, 'south');
@@ -107,5 +111,4 @@ describe('Robot', () => {
       expect(robot.report).toEqual('2,4,NORTH');
     });
   });
-
 });

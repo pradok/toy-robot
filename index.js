@@ -29,7 +29,7 @@ const readCommand = input => {
   const command = input.toUpperCase().trim();
   if (command.startsWith('PLACE')) {
     const [x, y, face] = command.trim().substr('PLACE'.length).trim().replace(/\s/g, '').split(',');
-    robot.place(x, y, face);
+    return robot.place(x, y, face);
   } else if (command === 'MOVE') {
     robot.move();
   } else if (command === 'LEFT') {

@@ -1,5 +1,4 @@
 class Robot {
-
   /**
    *
    * @param config
@@ -18,7 +17,7 @@ class Robot {
   }
 
   /**
-   * Validate Place inputs
+   * PLACE command, out of bounds placement will implicitly be placed at 0,0
    * @param x {number|string} x coordinate
    * @param y {number|string} y coordinate
    * @param f {String} Face direction, can be upper or lower case ('NORTH','EAST', 'SOUTH', 'WEST')
@@ -53,6 +52,11 @@ class Robot {
     };
   }
 
+  /**
+   * Getter for current position including face.
+   * Ignore and return undefined for out of bounds.
+   * @returns {string|undefined}
+   */
   get report() {
     const { x, y, face } = this.getCurrentPosition;
     // Ignore if not placed on surface
@@ -70,7 +74,8 @@ class Robot {
     if (!this.placeInitiated) {
       return;
     }
-    this.currentPosition.face = (this.currentPosition.face - 1) < 0 ? 3 : this.currentPosition.face - 1;
+    this.currentPosition.face =
+      this.currentPosition.face - 1 < 0 ? 3 : this.currentPosition.face - 1;
   }
 
   /**
@@ -81,7 +86,8 @@ class Robot {
     if (!this.placeInitiated) {
       return;
     }
-    this.currentPosition.face = (this.currentPosition.face + 1) > 3 ? 0 : this.currentPosition.face + 1;
+    this.currentPosition.face =
+      this.currentPosition.face + 1 > 3 ? 0 : this.currentPosition.face + 1;
   }
 
   /**
@@ -146,8 +152,14 @@ class Robot {
 
     const faceDirection = face.toUpperCase();
 
-    if (!this.config.directions.find(direction => direction === faceDirection)) {
-      throw new TypeError(`Incorrect Face direction, please provide one from: ${this.config.directions}`);
+    if (
+      !this.config.directions.find(direction => direction === faceDirection)
+    ) {
+      throw new TypeError(
+        `Incorrect Face direction, please provide one from: ${
+          this.config.directions
+        }`
+      );
     }
     return {
       placeX,
@@ -168,7 +180,6 @@ class Robot {
     this.currentPosition.y = y;
     this.currentPosition.face = this.config.directions.indexOf(face);
   }
-
 }
 
 module.exports = Robot;
