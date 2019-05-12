@@ -127,26 +127,27 @@ class Robot {
    * @private
    */
   _validatePlaceInputs(x, y, face) {
-    if (!face) {
-      throw new TypeError('Face direction not provided');
-    }
-    if (typeof face !== 'string') {
-      throw new TypeError('Face direction should be a string');
-    }
-    const faceDirection = face.toUpperCase();
     const placeX = parseInt(x);
     const placeY = parseInt(y);
 
     if (isNaN(x) || isNaN(y)) {
       throw new TypeError('Invalid coordinates');
     }
-
     if (placeX < 0 || placeY < 0) {
       throw new TypeError('Negative coordinates not allowed');
     }
 
+    if (!face) {
+      throw new Error('Face direction not provided');
+    }
+    if (typeof face !== 'string') {
+      throw new TypeError('Face direction should be a string');
+    }
+
+    const faceDirection = face.toUpperCase();
+
     if (!this.config.directions.find(direction => direction === faceDirection)) {
-      throw new TypeError('Incorrect Face direction');
+      throw new TypeError(`Incorrect Face direction, please provide one from: ${this.config.directions}`);
     }
     return {
       placeX,
